@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: dev
+
+  #  데이터 베이스 관련 설정...
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  #  jpa 설정.
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+
+  ---
+
+  spring :
+    profiles:
+      active:test
+
+# 테스트용

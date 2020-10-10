@@ -1,10 +1,10 @@
-package com.example.fined187.jpashop.service;
+package com.example.jpashop.service;
 
-import com.example.fined187.jpashop.domain.dto.ItemDto;
-import com.example.fined187.jpashop.domain.entity.item.Item;
-import com.example.fined187.jpashop.exception.NotFoundException;
-import com.example.fined187.jpashop.mapper.ItemMapper;
-import com.example.fined187.jpashop.repository.ItemRepository;
+import com.example.jpashop.domain.dto.ItemDTO;
+import com.example.jpashop.domain.entity.item.Item;
+import com.example.jpashop.exception.NotFoundException;
+import com.example.jpashop.mapper.ItemMapper;
+import com.example.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,49 +16,54 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional                  //  update 위해서...
-public class ItemServiceImpl implements ItemService{
+@Transactional(readOnly = true)
+public class ItemServiceImpl implements com.example.jpashop.service.ItemService {
 
-    private final ItemRepository itemRepository;
+    private final ItemRepository itemJpaRepository;
     private final ItemMapper itemMapper;
 
-//  Id를 이용해서 item을 조회.
-    @Override
-    public ItemDto getItem(Long id) {
-        Optional<Item> findItem = itemRepository.findById(id);
+    //  id를 이용하여 Item 조회.(item 1개 가져옴)
+    public ItemDTO getItem(Long id) {
+        Optional<Item> findItem = itemJpaRepository.findById(id);
         Item item = findItem
-                .orElseThrow(() -> new NotFoundException("Not found item. id : " + id));
+                .orElseThrow(() -> new NotFoundException("not found item. id : " + id));
+
         return itemMapper.toDto(item);
+
+
+//        return itemJpaRepository.findById(id)
+//                .orElseThrow(() -> new NotFoundException("not found item. id : " + id));
     }
 
-//  모든 Item을 조회하여 가져오기.
     @Override
-    public List<ItemDto> getItemList() {
+    public List<ItemDTO> getItemList() {
 
-//      데이터베이스 조회 시 데이터가 없을 경우 null 반환 처리.
-        List<Item> items = Optional.of(itemRepository.findAll())
-                .orElse(Collections.emptyList());
+
+//      데이터베이스 조회 시 데이터가 없을 경우 null 반환 예외처리...
+        List<Item> items =
+                Optional.of(itemJpaRepository.findAll())
+                        .orElse(Collections.emptyList());
 
         return items.stream()
                 .map(itemMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    //  Item 등록
     @Transactional
     @Override
-    public Long registerItem(ItemDto itemDto) {
-        Item item = itemMapper.toEntity(itemDto);
+    public Long registerItem(ItemDTO itemDTO) {
 
-        return itemRepository.save(item).getId();
+        Item item = itemMapper.toEntity(itemDTO);
+
+        return itemJpaRepository.save(item).getId();
     }
 
     @Transactional
     @Override
-    public void update(Long id, ItemDto itemDto) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not Found id: " + id));
+    public void update(Long id, ItemDTO itemDTO) {
+        Item item = itemJpaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("" + id));
 
-        item.changeInfo(itemDto);
+        item.changeInfo(itemDTO);
     }
 }

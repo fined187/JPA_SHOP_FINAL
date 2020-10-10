@@ -1,42 +1,42 @@
-package com.example.fined187.jpashop.mapper;
+package com.example.jpashop.mapper;
 
-import com.example.fined187.jpashop.domain.dto.ItemDto;
-import com.example.fined187.jpashop.domain.entity.item.Album;
-import com.example.fined187.jpashop.domain.entity.item.Book;
-import com.example.fined187.jpashop.domain.entity.item.Item;
-import com.example.fined187.jpashop.domain.entity.item.Laptop;
-import org.mapstruct.Mapper;
+import com.example.fined187.jpashop.domain.dto.ItemDTO;
+import com.example.fined187.jpashop.mapper.EntityMapper;
+import com.example.jpashop.domain.entity.item.Book;
+import com.example.jpashop.domain.entity.item.Item;
+import com.example.jpashop.domain.entity.item.Laptop;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Mapper(componentModel = "spring")
-public class ItemMapper implements EntityMapper<Item, ItemDto> {
+@Component
+public class ItemMapper implements EntityMapper<Item, ItemDTO> {
+
     @Override
-    public Item toEntity(ItemDto dto) {
-        ItemEnumFactory itemEnumFactory = Arrays.stream(ItemEnumFactory.values())
+    public Item toEntity(ItemDTO dto) {
+
+        com.example.jpashop.mapper.ItemEnumFactory itemFactory = Arrays.stream(com.example.jpashop.mapper.ItemEnumFactory.values())
                 .filter(factory -> factory.getType().equals(dto.getType()))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
 
-        return itemEnumFactory.create(dto);
+        return itemFactory.create(dto);
     }
 
     @Override
-    public ItemDto toDto(Item entity) {
-        ItemDto itemDto = new ItemDto();
-        itemDto.setItemName(entity.getItemName());
-        itemDto.setItemPrice(entity.getItemPrice());
-        itemDto.setItemCount(entity.getItemCount());
+    public ItemDTO toDto(Item entity) {
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setItemName(entity.getItemName());
+        itemDTO.setItemCount(entity.getItemCount());
+        itemDTO.setItemPrice(entity.getItemPrice());
 
         if(entity instanceof Book) {
-            itemDto.setBAuthor(((Book) entity).getBAuthor());
-            itemDto.setIsbn(((Book) entity).getIsbn());
+            itemDTO.setBAuthor(((Book) entity).getBAuthor());
+            itemDTO.setIsbn(((Book) entity).getIsbn());
 
         }else if(entity instanceof Laptop) {
-            itemDto.setCode(((Laptop) entity).getCode());
-        } else (entity instanceof Album) {
-            itemDto.setArtist(entity.getArtist);
+            itemDTO.setCode(((Laptop) entity).getCode());
         }
-        return null;
+        return itemDTO;
     }
 }

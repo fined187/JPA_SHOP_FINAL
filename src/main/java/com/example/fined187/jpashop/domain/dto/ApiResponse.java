@@ -1,4 +1,4 @@
-package com.example.fined187.jpashop.domain.dto;
+package com.example.jpashop.domain.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,15 +12,17 @@ public class ApiResponse {
     private String defaultMessage;
 
     public static ApiResponse success(Object data) {
-        return ApiResponse
-                .builder()
+        return ApiResponse.builder()
                 .data(data)
                 .code("")
                 .defaultMessage("")
                 .build();
     }
 
-    public static ApiResponse fail(String errorCode, String defaultMessage) {
+    public static ApiResponse fail(
+            String errorCode,
+            String defaultMessage
+    ){
         return ApiResponse.builder()
                 .data("{}")
                 .code(errorCode)

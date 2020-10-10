@@ -1,28 +1,27 @@
-package com.example.fined187.jpashop.controller;
+package com.example.jpashop.controller;
 
-import com.example.fined187.jpashop.domain.dto.ApiResponse;
-import com.example.fined187.jpashop.domain.dto.ItemDto;
-import com.example.fined187.jpashop.service.ItemService;
+import com.example.jpashop.domain.dto.ApiResponse;
+import com.example.jpashop.domain.dto.ItemDTO;
+import com.example.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
 
     @PostMapping("/v1/items")
-    ResponseEntity<?> createItem(@RequestBody ItemDto itemDto) throws URISyntaxException {
+    ResponseEntity<?> createItem(@RequestBody ItemDTO itemDTO) {
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(itemService.registerItem(itemDto))
+                .buildAndExpand(itemService.registerItem(itemDTO))
                 .toUri();
 
         return ResponseEntity.created(location).build();
@@ -30,8 +29,12 @@ public class ItemController {
 
     @GetMapping("/v1/items/{id}")
     ResponseEntity<?> getItem(@PathVariable("id") Long id) {
-        ItemDto findItem = itemService.getItem(id);
+        ItemDTO findItem = itemService.getItem(id);
 
+//      첫 번째 방법.
+//      return ResponseEntity.ok().body(findItem);
+
+//      두 번째 방법.
         return ResponseEntity.ok().body(ApiResponse.success(findItem));
     }
 
@@ -40,10 +43,11 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.getItemList());
     }
 
-    @PutMapping("v1/items/{id}")
-    ResponseEntity<ItemDto> updateItem(@PathVariable("id") Long id, @RequestBody ItemDto itemDto) {
+    @PutMapping("/v1/items/{id}")
+    ResponseEntity<ItemDTO> updateItem(
+            @PathVariable("id") Long id, @RequestBody ItemDTO itemDTO) {
 
-        itemService.update(id, itemDto);
+        itemService.update(id, itemDTO);
 
         return ResponseEntity.ok().body(null);
     }

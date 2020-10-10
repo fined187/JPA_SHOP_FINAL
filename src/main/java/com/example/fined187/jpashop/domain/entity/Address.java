@@ -1,4 +1,4 @@
-package com.example.fined187.jpashop.domain.entity;
+package com.example.jpashop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 @NoArgsConstructor
 @Getter
-public class Address {
-    private String city;
+public class Address{
     private String street;
+    private String city;
     private String zipcode;
 
     @Builder
@@ -20,4 +20,5 @@ public class Address {
         this.city = city;
         this.zipcode = zipcode;
     }
+
 }

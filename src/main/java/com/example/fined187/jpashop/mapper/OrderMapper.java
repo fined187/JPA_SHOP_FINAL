@@ -1,43 +1,45 @@
-package com.example.fined187.jpashop.mapper;
+package com.example.jpashop.mapper;
 
-import com.example.fined187.jpashop.domain.dto.OrderDto;
-import com.example.fined187.jpashop.domain.dto.OrderItemDto;
-import com.example.fined187.jpashop.domain.entity.Order;
-import com.example.fined187.jpashop.domain.entity.OrderItem;
+import com.example.fined187.jpashop.domain.dto.OrderDTO;
+import com.example.fined187.jpashop.domain.dto.OrderItemDTO;
+import com.example.fined187.jpashop.mapper.EntityMapper;
+import com.example.jpashop.domain.entity.Order;
+import com.example.jpashop.domain.entity.OrderItem;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class OrderMapper implements EntityMapper<Order, OrderDto> {
+public class OrderMapper implements EntityMapper<Order, OrderDTO> {
     @Override
-    public Order toEntity(OrderDto dto) {
-
+    public Order toEntity(OrderDTO dto) {
         return null;
     }
 
     @Override
-    public OrderDto toDto(Order entity) {
-        List<OrderItem> orderItems = entity.getOrderItems();
-        List<OrderItemDto> orderItemDtos = new ArrayList<>();
+    public OrderDTO toDto(Order entity) {
 
-        for(OrderItem orderItem : orderItems) {
-            OrderItemDto orderItemDto = OrderItemDto
+        List<OrderItem> orderItems = entity.getOrderItems();
+        List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
+
+        for (OrderItem orderItem : orderItems) {
+            OrderItemDTO orderItemDTO = OrderItemDTO
                     .builder()
                     .itemId(orderItem.getId())
                     .count(orderItem.getOrderItemCount())
                     .price(orderItem.getOrderItemPrice())
                     .build();
 
-            orderItemDtos.add(orderItemDto);
+            orderItemDTOS.add(orderItemDTO);
         }
 
-        OrderDto orderDto = OrderDto.builder()
-                .memberId(entity.getId())
+        OrderDTO orderDTO = OrderDTO.builder()
+                .memberId(entity.getMember().getId())
                 .city(entity.getMember().getAddress().getCity())
                 .street(entity.getMember().getAddress().getStreet())
                 .zipcode(entity.getMember().getAddress().getZipcode())
+                .orderItemDTOList(orderItemDTOS)
                 .build();
         return null;
     }

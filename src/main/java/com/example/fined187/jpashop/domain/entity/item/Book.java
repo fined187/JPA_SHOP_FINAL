@@ -1,35 +1,33 @@
-package com.example.fined187.jpashop.domain.entity.item;
+package com.example.jpashop.domain.entity.item;
 
-import com.example.fined187.jpashop.domain.dto.ItemDto;
+import com.example.fined187.jpashop.domain.dto.ItemDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @DiscriminatorValue("book")
-public class Book extends Item{
+public class Book extends com.example.jpashop.domain.entity.item.Item {
     private String bAuthor;
     private String isbn;
 
     @Builder
-    public Book(String itemName, int itemPrice, int itemCount, String bAuthor, String isbn) {
-        super(itemName, itemPrice, itemCount);
+    public Book(String itemName, int itemCount, int itemPrice, String bAuthor, String isbn) {
+        super(itemName, itemCount, itemPrice);
         this.bAuthor = bAuthor;
         this.isbn = isbn;
     }
 
-//  책의 정보를 수정하는 method.
     @Override
-    public void changeInfo(ItemDto itemDto) {
-        super.changeInfo(itemDto);
-        this.bAuthor = itemDto.getBAuthor();
-        this.isbn = itemDto.getIsbn();
+    public void changeInfo(ItemDTO itemDTO) {
+        super.changeInfo(itemDTO);
+        this.bAuthor = itemDTO.getBAuthor();
+        this.isbn = itemDTO.getIsbn();
     }
 }

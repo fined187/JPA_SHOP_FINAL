@@ -1,30 +1,29 @@
-package com.example.fined187.jpashop.domain.entity.item;
+package com.example.jpashop.domain.entity.item;
 
-import com.example.fined187.jpashop.domain.dto.ItemDto;
+import com.example.fined187.jpashop.domain.dto.ItemDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("album")
 @NoArgsConstructor
 @Getter @Setter
-public class Album extends Item{
+public class Album extends com.example.jpashop.domain.entity.item.Item {
     private String artist;
 
     @Builder
-    public Album(String itemName, int itemPrice, int itemCount, String artist) {
-        super(itemName, itemPrice, itemCount);
+    public Album(String itemName, int itemCount, int itemPrice, String artist) {
+        super(itemName, itemCount, itemPrice);
         this.artist = artist;
     }
 
     @Override
-    public void changeInfo(ItemDto itemDto) {
-        super.changeInfo(itemDto);
-        this.artist = itemDto.getCode();
+    public void changeInfo(ItemDTO itemDTO) {
+        super.changeInfo(itemDTO);
+        this.artist = itemDTO.getArtist();
     }
 }

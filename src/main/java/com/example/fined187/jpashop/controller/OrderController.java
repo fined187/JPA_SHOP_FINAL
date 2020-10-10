@@ -1,30 +1,28 @@
-package com.example.fined187.jpashop.controller;
+package com.example.jpashop.controller;
 
-import com.example.fined187.jpashop.domain.dto.OrderDto;
-
-import com.example.fined187.jpashop.service.OrderService;
+import com.example.jpashop.domain.dto.OrderDTO;
+import com.example.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class OrderController {
+
     private final OrderService orderService;
 
     @PostMapping("/v1/orders")
-    ResponseEntity<?> order(@RequestBody OrderDto orderDto) {
-        orderService.order(orderDto);
+    ResponseEntity<?> order(@RequestBody OrderDTO orderDTO) {
+        orderService.order(orderDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(orderService.order(orderDto))
+                .buildAndExpand(orderService.order(orderDTO))
                 .toUri();
 
         return ResponseEntity.created(location).build();
@@ -40,11 +38,14 @@ public class OrderController {
     @GetMapping("/v1/orders/{id}")
     ResponseEntity<?> getOrder(@PathVariable("id") Long id) {
 
-        return ResponseEntity.ok().body(orderService.getOrder(id));
+        return ResponseEntity.ok().body(
+                orderService.getOrder(id));
     }
 
     @GetMapping("/v1/orders")
     ResponseEntity<?> getOrder() {
-        return ResponseEntity.ok().body(orderService.getOrders());
+
+        return ResponseEntity.ok().body(
+                orderService.getOrders());
     }
 }

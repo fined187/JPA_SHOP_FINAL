@@ -1,15 +1,12 @@
-package com.example.fined187.jpashop.domain.entity;
+package com.example.jpashop.domain.entity;
 
 import com.example.fined187.jpashop.domain.enums.DeliveryStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Delivery {
 
@@ -19,16 +16,16 @@ public class Delivery {
 
     @OneToOne(mappedBy = "delivery")
     @Setter
-    private Order order;
+    private com.example.jpashop.domain.entity.Order order;
 
     @Embedded
-    private Address address;
+    private com.example.jpashop.domain.entity.Address address;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
     @Builder
-    public Delivery(Address address, DeliveryStatus deliveryStatus) {
+    public Delivery(com.example.jpashop.domain.entity.Address address, DeliveryStatus deliveryStatus) {
         this.address = address;
         this.deliveryStatus = deliveryStatus;
     }

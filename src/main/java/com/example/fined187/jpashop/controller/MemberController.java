@@ -1,11 +1,9 @@
-package com.example.fined187.jpashop.controller;
+package com.example.jpashop.controller;
 
-import com.example.fined187.jpashop.domain.dto.MemberDto;
-import com.example.fined187.jpashop.domain.entity.Member;
-import com.example.fined187.jpashop.mapper.MemberMapper;
-import com.example.fined187.jpashop.service.MemberService;
+import com.example.jpashop.domain.dto.MemberDTO;
+import com.example.jpashop.mapper.MemberMapper;
+import com.example.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,29 +21,26 @@ public class MemberController {
 
 
     @GetMapping("/v1/members/{id}")
-    ResponseEntity<MemberDto> getMember(@PathVariable(name = "id") Long id) {
+    ResponseEntity<MemberDTO> getMember(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok()
-                .body(memberMapper.toDto(memberService.findMember(id)));
+                .body(memberService.getMember(id));
     }
 
     @PostMapping("/v1/members")
-    ResponseEntity<?> createMember(@RequestBody @Valid MemberDto memberDto) {
+    ResponseEntity<?> createMember(@RequestBody @Valid MemberDTO memberDTO) {
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(memberService.join(memberDto))
+                .buildAndExpand(memberService.join(memberDTO))
                 .toUri();
 
-        Long memberId = memberService.join(memberDto).getId();
+        System.out.println(location.toString());
 
-        URI uri = WebMvcLinkBuilder.linkTo(MemberController.class).slash(memberId).toUri();
-
-        System.out.println(uri.toString());
-
-        return ResponseEntity.created(uri).body("{}");
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/v1/members")
-    ResponseEntity<List<Member>> getMember() {
+    ResponseEntity<List<MemberDTO>> getMember() {
         return ResponseEntity.ok().body(null);
     }
 }

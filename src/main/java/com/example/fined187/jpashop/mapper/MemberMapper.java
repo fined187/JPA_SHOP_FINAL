@@ -1,16 +1,18 @@
-package com.example.fined187.jpashop.mapper;
+package com.example.jpashop.mapper;
 
-import com.example.fined187.jpashop.domain.dto.MemberDto;
-import com.example.fined187.jpashop.domain.entity.Address;
-import com.example.fined187.jpashop.domain.entity.Member;
+import com.example.fined187.jpashop.domain.dto.MemberDTO;
+import com.example.fined187.jpashop.mapper.EntityMapper;
+import com.example.jpashop.domain.entity.Address;
+import com.example.jpashop.domain.entity.Member;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MemberMapper implements EntityMapper<Member, MemberDto>{
+public class MemberMapper implements EntityMapper<Member, MemberDTO> {
 
 
     @Override
-    public Member toEntity(MemberDto dto) {
+    public Member toEntity(MemberDTO dto) {
+
         Address address = Address.builder()
                 .city(dto.getCity())
                 .street(dto.getStreet())
@@ -25,8 +27,8 @@ public class MemberMapper implements EntityMapper<Member, MemberDto>{
     }
 
     @Override
-    public MemberDto toDto(Member entity) {
-        return MemberDto.builder()
+    public MemberDTO toDto(Member entity) {
+        return MemberDTO.builder()
                 .name(entity.getName())
                 .city(entity.getAddress().getCity())
                 .email(entity.getEmail())

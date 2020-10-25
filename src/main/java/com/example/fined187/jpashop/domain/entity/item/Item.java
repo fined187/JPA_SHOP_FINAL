@@ -1,9 +1,9 @@
-package com.example.jpashop.domain.entity.item;
+package com.example.fined187.jpashop.domain.entity.item;
 
 import com.example.fined187.jpashop.domain.dto.ItemDTO;
+import com.example.fined187.jpashop.domain.entity.BaseDataEntity;
+import com.example.fined187.jpashop.domain.entity.OrderItem;
 import com.example.fined187.jpashop.exception.NotEnoughException;
-import com.example.jpashop.domain.entity.BaseDataEntity;
-import com.example.jpashop.domain.entity.OrderItem;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,10 +34,8 @@ public abstract class Item extends BaseDataEntity {
         this.itemCount = itemCount;
     }
 
-    //  Domain Logic
-//  재고 감소.
     public void removeStock(int orderItemCount) {
-        int restStock = this.itemCount - orderItemCount;            //  나머지 재고 = 현재 itemCount - 주문 itemCount
+        int restStock = this.itemCount - orderItemCount;
 
 //      Todo API 협의 후 예외처리 보완.
         if(restStock < 0) {
@@ -46,7 +44,6 @@ public abstract class Item extends BaseDataEntity {
         }
     }
 
-    //  재고 증가.
     public void addStock(int count) {
         this.itemCount += count;
     }

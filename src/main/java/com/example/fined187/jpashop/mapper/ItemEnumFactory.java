@@ -1,13 +1,14 @@
-package com.example.jpashop.mapper;
+package com.example.fined187.jpashop.mapper;
 
 import com.example.fined187.jpashop.domain.dto.ItemDTO;
-import com.example.jpashop.domain.entity.item.Album;
-import com.example.jpashop.domain.entity.item.Book;
-import com.example.jpashop.domain.entity.item.Item;
-import com.example.jpashop.domain.entity.item.Laptop;
+
+import com.example.fined187.jpashop.domain.entity.item.Album;
+import com.example.fined187.jpashop.domain.entity.item.Book;
+import com.example.fined187.jpashop.domain.entity.item.Item;
+import com.example.fined187.jpashop.domain.entity.item.Laptop;
 import lombok.Getter;
 
-public enum ItemEnumFactory {       //  itemDto -> entity
+public enum ItemEnumFactory {
     BOOK("book") {
         protected Item create(ItemDTO itemVO) {
             return Book.builder()
@@ -51,7 +52,5 @@ public enum ItemEnumFactory {       //  itemDto -> entity
     }
 
     abstract protected Item create(ItemDTO itemVO);
-
-//      ???
 
 }

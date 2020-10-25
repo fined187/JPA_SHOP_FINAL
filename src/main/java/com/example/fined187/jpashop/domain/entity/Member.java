@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.entity;
+package com.example.fined187.jpashop.domain.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -18,17 +18,17 @@ public class Member {
     private Long id;
 
     @OneToMany(mappedBy = "member")
-    List<com.example.jpashop.domain.entity.Order> orders = new ArrayList<>();
+    List<Order> orders = new ArrayList<>();
 
     @Column(name = "member_name")
     private String name;
     private String email;
 
     @Embedded
-    private com.example.jpashop.domain.entity.Address address;
+    private Address address;
 
     @Builder
-    public Member(Long id, String name, String email, com.example.jpashop.domain.entity.Address address) {
+    public Member(Long id, String name, String email, Address address) {
         this.id = id;
         this.name = name;
         this.email = email;

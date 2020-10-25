@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.entity;
+package com.example.fined187.jpashop.domain.entity;
 
 import com.example.fined187.jpashop.domain.enums.DeliveryStatus;
 import com.example.fined187.jpashop.domain.enums.OrderStatus;
@@ -19,33 +19,33 @@ public class Order {
     private Long id;
 
     @OneToMany(mappedBy = "order")
-    List<com.example.jpashop.domain.entity.OrderItem> orderItems = new ArrayList<>();
+    List<OrderItem> orderItems = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private com.example.jpashop.domain.entity.Member member;
+    private Member member;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivet_id")
-    private com.example.jpashop.domain.entity.Delivery delivery;
+    private Delivery delivery;
 
     private LocalDateTime orderTime;
     private int orderPrice;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    //  관계 편의 메서드.
-    public void setMember(com.example.jpashop.domain.entity.Member member) {
+
+    public void setMember(Member member) {
         this.member = member;
         member.getOrders().add(this);
     }
 
-    public void setDelivery(com.example.jpashop.domain.entity.Delivery delivery) {
+    public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
     }
 
-    public void addOrderItem(com.example.jpashop.domain.entity.OrderItem orderItem) {
+    public void addOrderItem(OrderItem orderItem) {
         orderItem.setOrder(this);
         this.orderItems.add(orderItem);
     }
@@ -56,8 +56,7 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    //  도메인 로직.
-    public static Order createOrder(com.example.jpashop.domain.entity.Member member, com.example.jpashop.domain.entity.Delivery delivery, List<com.example.jpashop.domain.entity.OrderItem> orderItems) {
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order order = Order
                 .builder()
                 .orderTime(LocalDateTime.now())
@@ -67,7 +66,7 @@ public class Order {
         order.setMember(member);
         order.setDelivery(delivery);
 
-        for(com.example.jpashop.domain.entity.OrderItem orderItem : orderItems) {
+        for(OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }
         return order;
@@ -75,7 +74,7 @@ public class Order {
 
     public int totalPrice() {
         return this.getOrderItems().stream()
-                .mapToInt(com.example.jpashop.domain.entity.OrderItem::getOrderItemPrice)
+                .mapToInt(OrderItem::getOrderItemPrice)
                 .sum();
     }
 
@@ -84,6 +83,6 @@ public class Order {
                 this.delivery.getDeliveryStatus() == DeliveryStatus.DELIVERYING) {
             throw new IllegalStateException("배송중이거나 배송 완료된 상품은 주문 취소 할 수 없습니다.");
         }
-        getOrderItems().forEach(com.example.jpashop.domain.entity.OrderItem::cancel);
+        getOrderItems().forEach(OrderItem::cancel);
     }
 }

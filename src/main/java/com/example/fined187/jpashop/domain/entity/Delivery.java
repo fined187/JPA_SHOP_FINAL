@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.entity;
+package com.example.fined187.jpashop.domain.entity;
 
 import com.example.fined187.jpashop.domain.enums.DeliveryStatus;
 import lombok.*;
@@ -16,16 +16,16 @@ public class Delivery {
 
     @OneToOne(mappedBy = "delivery")
     @Setter
-    private com.example.jpashop.domain.entity.Order order;
+    private Order order;
 
     @Embedded
-    private com.example.jpashop.domain.entity.Address address;
+    private Address address;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
     @Builder
-    public Delivery(com.example.jpashop.domain.entity.Address address, DeliveryStatus deliveryStatus) {
+    public Delivery(Address address, DeliveryStatus deliveryStatus) {
         this.address = address;
         this.deliveryStatus = deliveryStatus;
     }

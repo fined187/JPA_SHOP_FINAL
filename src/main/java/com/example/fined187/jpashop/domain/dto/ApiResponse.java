@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.dto;
+package com.example.fined187.jpashop.domain.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.entity.item;
+package com.example.fined187.jpashop.domain.entity.item;
 
 import com.example.fined187.jpashop.domain.dto.ItemDTO;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @DiscriminatorValue("album")
 @NoArgsConstructor
 @Getter @Setter
-public class Album extends com.example.jpashop.domain.entity.item.Item {
+public class Album extends Item {
     private String artist;
 
     @Builder

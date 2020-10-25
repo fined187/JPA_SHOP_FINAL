@@ -1,6 +1,6 @@
-package com.example.jpashop.domain.entity;
+package com.example.fined187.jpashop.domain.entity;
 
-import com.example.jpashop.domain.entity.item.Item;
+import com.example.fined187.jpashop.domain.entity.item.Item;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     @Setter
-    private com.example.jpashop.domain.entity.Order order;
+    private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
@@ -33,7 +33,6 @@ public class OrderItem {
         this.orderItemCount = orderItemCount;
     }
 
-    //  연관 관계 편의 메서드
     public void setItem(Item item) {
         this.item = item;
         item.removeStock(getOrderItemCount());

@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.entity;
+package com.example.fined187.jpashop.domain.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +10,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@EntityListeners(AuditingEntityListener.class)  //  대기 중 특정 이벤트 발생 시 catch 해서 실행.(세션 정보들 가져와서 넣어줌)
+@EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
 public class BaseDataEntity {

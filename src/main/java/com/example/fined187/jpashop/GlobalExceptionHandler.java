@@ -1,7 +1,7 @@
-package com.example.jpashop;
+package com.example.fined187.jpashop;
 
+import com.example.fined187.jpashop.domain.dto.ApiResponse;
 import com.example.fined187.jpashop.exception.NotFoundException;
-import com.example.jpashop.domain.dto.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

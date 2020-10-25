@@ -1,4 +1,4 @@
-package com.example.jpashop.domain.entity.item;
+package com.example.fined187.jpashop.domain.entity.item;
 
 import com.example.fined187.jpashop.domain.dto.ItemDTO;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @DiscriminatorValue("book")
-public class Book extends com.example.jpashop.domain.entity.item.Item {
+public class Book extends Item {
     private String bAuthor;
     private String isbn;
 

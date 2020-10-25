@@ -1,10 +1,9 @@
-package com.example.jpashop.mapper;
+package com.example.fined187.jpashop.mapper;
 
 import com.example.fined187.jpashop.domain.dto.OrderDTO;
 import com.example.fined187.jpashop.domain.dto.OrderItemDTO;
-import com.example.fined187.jpashop.mapper.EntityMapper;
-import com.example.jpashop.domain.entity.Order;
-import com.example.jpashop.domain.entity.OrderItem;
+import com.example.fined187.jpashop.domain.entity.Order;
+import com.example.fined187.jpashop.domain.entity.OrderItem;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

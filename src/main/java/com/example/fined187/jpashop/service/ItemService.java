@@ -1,7 +1,7 @@
-package com.example.jpashop.service;
+package com.example.fined187.jpashop.service;
 
-import com.example.jpashop.domain.dto.ItemDTO;
-import com.example.jpashop.domain.entity.item.Item;
+
+import com.example.fined187.jpashop.domain.dto.ItemDTO;
 
 import java.util.List;
 

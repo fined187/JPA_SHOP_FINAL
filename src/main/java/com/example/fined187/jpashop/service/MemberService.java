@@ -1,10 +1,10 @@
-package com.example.jpashop.service;
+package com.example.fined187.jpashop.service;
 
-import com.example.jpashop.domain.dto.MemberDTO;
-import com.example.jpashop.domain.entity.Member;
-import com.example.jpashop.exception.NotFoundException;
-import com.example.jpashop.mapper.MemberMapper;
-import com.example.jpashop.repository.MemberRepository;
+import com.example.fined187.jpashop.domain.dto.MemberDTO;
+import com.example.fined187.jpashop.domain.entity.Member;
+import com.example.fined187.jpashop.exception.NotFoundException;
+import com.example.fined187.jpashop.mapper.MemberMapper;
+import com.example.fined187.jpashop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +19,8 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
-
     private final MemberMapper memberMapper;
 
-
-    /**
-     *
-     * 회원가입.
-     */
     @Transactional
     public Long join(MemberDTO memberDTO) {
         validateDuplicateMember(memberDTO);
@@ -42,9 +36,6 @@ public class MemberService {
         }
     }
 
-    /**
-     * 회원 전체 조회.
-     */
     public List<MemberDTO> findMembers() {
         List<Member> members =
                 Optional.of(memberRepository.findAll())

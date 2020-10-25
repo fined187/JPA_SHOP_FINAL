@@ -1,8 +1,8 @@
-package com.example.jpashop.controller;
+package com.example.fined187.jpashop.controller;
 
-import com.example.jpashop.domain.dto.MemberDTO;
-import com.example.jpashop.mapper.MemberMapper;
-import com.example.jpashop.service.MemberService;
+import com.example.fined187.jpashop.domain.dto.MemberDTO;
+import com.example.fined187.jpashop.mapper.MemberMapper;
+import com.example.fined187.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

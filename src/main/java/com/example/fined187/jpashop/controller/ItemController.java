@@ -1,8 +1,8 @@
-package com.example.jpashop.controller;
+package com.example.fined187.jpashop.controller;
 
-import com.example.jpashop.domain.dto.ApiResponse;
-import com.example.jpashop.domain.dto.ItemDTO;
-import com.example.jpashop.service.ItemService;
+import com.example.fined187.jpashop.domain.dto.ApiResponse;
+import com.example.fined187.jpashop.domain.dto.ItemDTO;
+import com.example.fined187.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +31,6 @@ public class ItemController {
     ResponseEntity<?> getItem(@PathVariable("id") Long id) {
         ItemDTO findItem = itemService.getItem(id);
 
-//      첫 번째 방법.
-//      return ResponseEntity.ok().body(findItem);
-
-//      두 번째 방법.
         return ResponseEntity.ok().body(ApiResponse.success(findItem));
     }
 

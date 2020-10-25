@@ -1,10 +1,9 @@
-package com.example.jpashop.mapper;
+package com.example.fined187.jpashop.mapper;
 
 import com.example.fined187.jpashop.domain.dto.ItemDTO;
-import com.example.fined187.jpashop.mapper.EntityMapper;
-import com.example.jpashop.domain.entity.item.Book;
-import com.example.jpashop.domain.entity.item.Item;
-import com.example.jpashop.domain.entity.item.Laptop;
+import com.example.fined187.jpashop.domain.entity.item.Book;
+import com.example.fined187.jpashop.domain.entity.item.Item;
+import com.example.fined187.jpashop.domain.entity.item.Laptop;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -15,7 +14,7 @@ public class ItemMapper implements EntityMapper<Item, ItemDTO> {
     @Override
     public Item toEntity(ItemDTO dto) {
 
-        com.example.jpashop.mapper.ItemEnumFactory itemFactory = Arrays.stream(com.example.jpashop.mapper.ItemEnumFactory.values())
+        ItemEnumFactory itemFactory = Arrays.stream(ItemEnumFactory.values())
                 .filter(factory -> factory.getType().equals(dto.getType()))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

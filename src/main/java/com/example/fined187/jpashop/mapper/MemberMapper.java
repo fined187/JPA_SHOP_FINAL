@@ -1,9 +1,8 @@
-package com.example.jpashop.mapper;
+package com.example.fined187.jpashop.mapper;
 
 import com.example.fined187.jpashop.domain.dto.MemberDTO;
-import com.example.fined187.jpashop.mapper.EntityMapper;
-import com.example.jpashop.domain.entity.Address;
-import com.example.jpashop.domain.entity.Member;
+import com.example.fined187.jpashop.domain.entity.Address;
+import com.example.fined187.jpashop.domain.entity.Member;
 import org.springframework.stereotype.Component;
 
 @Component

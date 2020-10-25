@@ -25,6 +25,13 @@
             </dependency>``` 
   in Pom.xml to add maven dependency.
   
+## 3. Order API
+- Request Format
+```java
+    OrderId : 1
+    
+```
+  
 ## 3. How to use
 - Build the Project and Run JpaShopApplication
 

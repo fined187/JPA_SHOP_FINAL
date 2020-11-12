@@ -1,75 +1,138 @@
 # JPA - SHOP PROJECT
 
-<pre> 개발 framework : spring boot 2.3.2.RELEASE(JPA)
-빌드 : mvn install
-실행 : java - jar </pre>
+---
+- 기본적인 회원관리와 상품관리 및 상품의 주문 배송에 대해 서비스를 제공하는 프로젝트.
+---
+
+<pre>
+- language : java, jdk 1.8
+- framework : spring boot 2.3.2
+- ORM : JPA(spring-data-jpa)
+- DBMS : H2
+- Build Tool : maven
+- Develop Tool : Intellij IDEA
+</pre>
 <br>
 
-- spring boot, JPA를 이용하여 기본적인 회원관리, 주문, 배송 등을 관리하는 서비스.
+## 2. MAVEN BUILD
 
-- Mapper interface를 활용하여 DTO의 접근을 관리
-</br>
----
+- maven 설치 : mvn install
 
-## 2. Installation
+- Compile : mvn compile
 
-- Open Terminal and typing ```cd Downloads/h2/bin``` 
+- java -jar jpa-shop.jar
 
-- ```./h2.sh``` to start h2
+## 3. ERD
 
-- Type ```<dependency>
-            <groupId>org.mapstruct</groupId>
-             <artifactId>mapstruct</artifactId>
-             <version>1.3.1.Final</version>
-             <optional>true</optional>
-            </dependency>``` 
-  in Pom.xml to add maven dependency.
+- URL : https://aquerytool.com:443/aquerymain/index/?rurl=b85e08f2-786d-45c2-a9ee-cd87c37237fd&
+
+- Password : b0x5m5
   
-## 3. Order API
-- Request Format
-```java
-    OrderId : 1
-    
+## 4. 각 서비스별 URL 및 JSON FORMAT
+
+### 4-1. MeberController
+- 회원 조회
 ```
-  
-## 3. How to use
-- Build the Project and Run JpaShopApplication
-
-- Test Using Postman
----
-    - CreateMember
-
-    @PostMapping("/v1/members")
-        ResponseEntity<?> createMember(@RequestBody @Valid MemberDTO memberDTO) {
-    
-           URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(memberService.join(memberDTO))
-                    .toUri();
-    
-            System.out.println(location.toString());
-    
-            return ResponseEntity.created(location).build();
+    @GetMapping("/v1/members/{id}")
+        ResponseEntity<MemberDTO> getMember(@PathVariable(name = "id") Long id) {
+            return ResponseEntity.ok()
+                    .body(memberService.getMember(id));
         }
 
-    - Search Item
-    
-    @GetMapping("/v1/items/{id}")
-        ResponseEntity<?> getItem(@PathVariable("id") Long id) {
-            ItemDTO findItem = itemService.getItem(id);
+```
 
-            return ResponseEntity.ok().body(ApiResponse.success(findItem));
-        }
----
+- 회원 가입
+```
+ @PostMapping("/v1/members")
+    ResponseEntity<?> createMember(@RequestBody @Valid MemberDTO memberDTO) {
 
-- Results
-    - Member
-<img width="561" alt="스크린샷 2020-10-10 오후 4 20 21" src="https://user-images.githubusercontent.com/60992433/95648814-0faac280-0b15-11eb-9488-1615dd50e6b7.png">
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(memberService.join(memberDTO))
+                .toUri();
 
-    - Item
-<img width="598" alt="스크린샷 2020-10-10 오후 4 35 04" src="https://user-images.githubusercontent.com/60992433/95649088-c9eef980-0b16-11eb-9877-698fccaaa34c.png">
+        System.out.println(location.toString());
 
+        return ResponseEntity.created(location).build();
+    }
+```
 
+### 4-2. ItemController
+
+- 상품 조회
+```
+@GetMapping("/v1/items/{id}")
+    ResponseEntity<?> getItem(@PathVariable("id") Long id) {
+        ItemDTO findItem = itemService.getItem(id);
+
+        return ResponseEntity.ok().body(ApiResponse.success(findItem));
+    }
+
+```
+
+- 상품 등록
+
+```
+    @PostMapping("/v1/items")
+    ResponseEntity<?> createItem(@RequestBody ItemDTO itemDTO) {
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(itemService.registerItem(itemDTO))
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+```
+
+- 상품 수정
+
+```
+    @PutMapping("/v1/items/{id}")
+    ResponseEntity<ItemDTO> updateItem(
+            @PathVariable("id") Long id, @RequestBody ItemDTO itemDTO) {
+
+        itemService.update(id, itemDTO);
+
+        return ResponseEntity.ok().body(null);
+    }
+```
+
+### 4-3. OrderController
+
+- 주문 등록
+
+```
+    @PostMapping("/v1/orders")
+    ResponseEntity<?> order(@RequestBody OrderDTO orderDTO) {
+        orderService.order(orderDTO);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(orderService.order(orderDTO))
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+```
+
+- 주문 조회 
+
+```
+    @GetMapping("/v1/members/{id}")
+    ResponseEntity<MemberDTO> getMember(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok()
+                .body(memberService.getMember(id));
+    }
+
+```
+##5. TODO
+
+- Spring Security 적용
+
+- JWT Token 사용
+
+- MySql 변경
 
 
 
